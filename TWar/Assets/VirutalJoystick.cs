@@ -37,7 +37,12 @@ public class VirutalJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
             innerJ.rectTransform.anchoredPosition =
              new Vector3(inputVector.x * (outerJ.rectTransform.sizeDelta.x/3)
               , inputVector.z * (outerJ.rectTransform.sizeDelta.y /3));
+            //cylinder.transform.RotateAround(cube.transform.position, new Vector3(innerJ.rectTransform.anchoredPosition.x, innerJ.rectTransform.anchoredPosition.y, 0),10);
             cylinder.transform.LookAt(innerJ.rectTransform.anchoredPosition);
+
+            /*Vector3 targetPoint = new Vector3(innerJ.rectTransform.anchoredPosition.x, innerJ.rectTransform.anchoredPosition.y,0);
+            Quaternion targetRotation = Quaternion.LookRotation(-cube.transform.position, innerJ.rectTransform.anchoredPosition);
+            cylinder.transform.rotation = Quaternion.Slerp(cylinder.transform.rotation, targetRotation, Time.deltaTime * 2.0f);*/
         }
     }
 
