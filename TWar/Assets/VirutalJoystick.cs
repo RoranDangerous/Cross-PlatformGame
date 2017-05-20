@@ -37,12 +37,19 @@ public class VirutalJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
             innerJ.rectTransform.anchoredPosition =
              new Vector3(inputVector.x * (outerJ.rectTransform.sizeDelta.x/3)
               , inputVector.z * (outerJ.rectTransform.sizeDelta.y /3));
-            //cylinder.transform.RotateAround(cube.transform.position, new Vector3(innerJ.rectTransform.anchoredPosition.x, innerJ.rectTransform.anchoredPosition.y, 0),10);
-            cylinder.transform.LookAt(innerJ.rectTransform.anchoredPosition);
+            print("Anchored: "+innerJ.rectTransform.anchoredPosition);
+            /cylinder.transform.RotateAround(cube.transform.position,new Vector3(0, 0, 0), 10);
+            cylinder.GetComponent<Renderer>().bounds.center = cube.transform.position;
+            //cylinder.transform.LookAt(innerJ.rectTransform.anchoredPosition);
+            //cylinder.transform.LookAt(cube.transform.position, innerJ.rectTransform.anchoredPosition);
 
             /*Vector3 targetPoint = new Vector3(innerJ.rectTransform.anchoredPosition.x, innerJ.rectTransform.anchoredPosition.y,0);
             Quaternion targetRotation = Quaternion.LookRotation(-cube.transform.position, innerJ.rectTransform.anchoredPosition);
             cylinder.transform.rotation = Quaternion.Slerp(cylinder.transform.rotation, targetRotation, Time.deltaTime * 2.0f);*/
+            /*Vector3 relativePos = cylinder.transform.position - cube.transform.position;
+            Quaternion rotation = Quaternion.LookRotation(new Vector3(innerJ.rectTransform.anchoredPosition.x, innerJ.rectTransform.anchoredPosition.y,0));
+            //cylinder.transform.rotation = Quaternion.Slerp(cylinder.transform.rotation,rotation,10);
+            cylinder.transform.rotation = rotation;*/
         }
     }
 
