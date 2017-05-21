@@ -14,7 +14,8 @@ public class MainScript : MonoBehaviour {
         rigidbody = cube.GetComponent<Rigidbody>();
         startAccelerationX = Input.acceleration.x;
         startAccelerationY = Input.acceleration.y;
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {

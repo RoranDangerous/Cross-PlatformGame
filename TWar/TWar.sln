@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TWar.Plugins", "TWar.Plugins.csproj", "{0A8C5AE4-F59E-FA34-AA23-F71DBD562A07}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TWar", "TWar.csproj", "{DC776112-554F-C061-7735-C91E1536E99B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TWar.Editor", "TWar.Editor.csproj", "{255FBF17-25E1-45C7-133F-6AF5916DB62B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A8C5AE4-F59E-FA34-AA23-F71DBD562A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A8C5AE4-F59E-FA34-AA23-F71DBD562A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A8C5AE4-F59E-FA34-AA23-F71DBD562A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A8C5AE4-F59E-FA34-AA23-F71DBD562A07}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DC776112-554F-C061-7735-C91E1536E99B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC776112-554F-C061-7735-C91E1536E99B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC776112-554F-C061-7735-C91E1536E99B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC776112-554F-C061-7735-C91E1536E99B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{255FBF17-25E1-45C7-133F-6AF5916DB62B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{255FBF17-25E1-45C7-133F-6AF5916DB62B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{255FBF17-25E1-45C7-133F-6AF5916DB62B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{255FBF17-25E1-45C7-133F-6AF5916DB62B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

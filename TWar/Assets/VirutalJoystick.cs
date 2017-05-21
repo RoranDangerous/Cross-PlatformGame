@@ -16,11 +16,11 @@ public class VirutalJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
     {
         outerJ = GetComponent<Image>();
         innerJ = transform.GetChild(0).GetComponent<Image>();
+
     }
 
     public virtual void OnDrag(PointerEventData ped)
     {
-        print("Touch: " + ped.position);
         Vector2 pos;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(outerJ.rectTransform
                        , new Vector2(ped.position.x-150,ped.position.y+150)
@@ -29,19 +29,17 @@ public class VirutalJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
         {
             pos.x = (pos.x / (outerJ.rectTransform.sizeDelta.x));
             pos.y = (pos.y / (outerJ.rectTransform.sizeDelta.y));
-            print("Position after: " + pos);
             
             inputVector = new Vector3(pos.x * 2 + 1, 0, pos.y * 2 - 1);
             inputVector = (inputVector.magnitude > 1.0f) ? inputVector.normalized : inputVector;
-            print("input vector " + inputVector);
             innerJ.rectTransform.anchoredPosition =
              new Vector3(inputVector.x * (outerJ.rectTransform.sizeDelta.x/3)
               , inputVector.z * (outerJ.rectTransform.sizeDelta.y /3));
-            print("Anchored: "+innerJ.rectTransform.anchoredPosition);
-            /cylinder.transform.RotateAround(cube.transform.position,new Vector3(0, 0, 0), 10);
-            cylinder.GetComponent<Renderer>().bounds.center = cube.transform.position;
+            cylinder.transform.RotateAround(cube.transform.position,new Vector3(0, 0, 0), 10);
+            //cylinder.GetComponent<Renderer>().bounds.center = cube.transform.position;
             //cylinder.transform.LookAt(innerJ.rectTransform.anchoredPosition);
-            //cylinder.transform.LookAt(cube.transform.position, innerJ.rectTransform.anchoredPosition);
+            cylinder.transform.LookAt(innerJ.rectTransform.anchoredPosition);
+            cube.transform.position = new Vector3(cube.transform.position.x + 0.01f, cube.transform.position.y + 0.01f, cube.transform.position.z);
 
             /*Vector3 targetPoint = new Vector3(innerJ.rectTransform.anchoredPosition.x, innerJ.rectTransform.anchoredPosition.y,0);
             Quaternion targetRotation = Quaternion.LookRotation(-cube.transform.position, innerJ.rectTransform.anchoredPosition);
