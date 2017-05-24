@@ -17,7 +17,6 @@ public class JoysticScript : MonoBehaviour, IDragHandler, IPointerUpHandler, IPo
     }
     public virtual void OnDrag(PointerEventData ped)
     {
-        print("onDrag");
         Vector2 pos;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(outerJ.rectTransform
                        , ped.position

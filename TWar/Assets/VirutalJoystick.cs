@@ -19,6 +19,7 @@ public class VirutalJoystick : MonoBehaviour, IDragHandler, IPointerUpHandler, I
 
     }
 
+
     public virtual void OnDrag(PointerEventData ped)
     {
         Vector2 pos;

@@ -7,10 +7,10 @@ public class MainScript : MonoBehaviour {
 
     public GameObject cube;
     private new Rigidbody rigidbody;
-    public Text text;
     private float startAccelerationX, startAccelerationY;
     // Use this for initialization
     void Start () {
+        print("######## START @@@@@@@");
         rigidbody = cube.GetComponent<Rigidbody>();
         startAccelerationX = Input.acceleration.x;
         startAccelerationY = Input.acceleration.y;
@@ -19,7 +19,7 @@ public class MainScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        text.text = "x: "+Input.acceleration.x + " y: " + Input.acceleration.y;
+        print("Update");
         Vector3 movement = new Vector3(Input.acceleration.x-startAccelerationX, Input.acceleration.y-startAccelerationY, 0.0f);
         rigidbody.velocity = movement * 25;
     }

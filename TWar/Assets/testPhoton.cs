@@ -35,6 +35,5 @@ public class testPhoton : Photon.PunBehaviour {
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
-        print("connected to master");
     }
 }
