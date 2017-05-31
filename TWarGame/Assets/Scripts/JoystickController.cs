@@ -12,6 +12,8 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
     public GameObject weapon;
     public GameObject body;
     private Vector3 inputVector;
+    private Vector3 startAnchoredPosition;
+    public GameObject player;
 
     void Start () {
         outerJ = GetComponent<Image>();
@@ -22,7 +24,7 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
     {
         Vector2 pos;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(outerJ.rectTransform
-                       , new Vector2(ped.position.x - 100, ped.position.y + 100)
+                       , new Vector2(ped.position.x - 250, ped.position.y + 250)
                        , ped.pressEventCamera
                        , out pos))
         {
@@ -36,9 +38,13 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
             innerJ.rectTransform.anchoredPosition =
              new Vector3(inputVector.x * (outerJ.rectTransform.sizeDelta.x / 3)
               , inputVector.z * (outerJ.rectTransform.sizeDelta.y / 3));
-
             //Rotate the weapon
-            weapon.transform.LookAt(new Vector3(innerJ.rectTransform.anchoredPosition.x,0, innerJ.rectTransform.anchoredPosition.y));
+            /*Vector3 target = new Vector3();
+            target.z = innerJ.rectTransform.anchoredPosition.y;
+            weapon.transform.LookAt(target);*/
+            //print((innerJ.rectTransform.anchoredPosition.x - player.transform.position.x)+" "+ (innerJ.rectTransform.anchoredPosition.y - player.transform.position.z));
+            //weapon.transform.LookAt(new Vector3(innerJ.rectTransform.anchoredPosition.x - player.transform.position.x,0, innerJ.rectTransform.anchoredPosition.y - player.transform.position.z));
+            weapon.transform.LookAt(new Vector3(-innerJ.rectTransform.anchoredPosition3D.x+14, 0, -innerJ.rectTransform.anchoredPosition3D.y+14));
         }
     }
 
