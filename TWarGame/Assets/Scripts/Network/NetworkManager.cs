@@ -9,6 +9,7 @@ public class NetworkManager : Photon.PunBehaviour
     const string version = "v0.0.1";
     public GameObject spawn;
     public string playerPrefab = "Player";
+    private GameObject player;
 
     void Start () {
         if (!PhotonNetwork.connected)
@@ -23,7 +24,6 @@ public class NetworkManager : Photon.PunBehaviour
 
     public override void OnJoinedLobby()
     {
-        print("###### lobby joined!!! #########");
         base.OnJoinedLobby();
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.IsVisible = false;
@@ -34,7 +34,13 @@ public class NetworkManager : Photon.PunBehaviour
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        print("###### Instantiating #######");
-        PhotonNetwork.Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation, 0);
+        Vector3 position = new Vector3(spawn.transform.position.x + 3, spawn.transform.position.y + 1, spawn.transform.position.z);
+        player = PhotonNetwork.Instantiate(playerPrefab, position, spawn.transform.rotation, 0);
+    }
+
+    public override void OnDisconnectedFromPhoton()
+    {
+        base.OnDisconnectedFromPhoton();
+        Destroy(player);
     }
 }
