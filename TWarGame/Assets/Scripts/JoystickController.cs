@@ -39,11 +39,6 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
              new Vector3(inputVector.x * (outerJ.rectTransform.sizeDelta.x / 3)
               , inputVector.z * (outerJ.rectTransform.sizeDelta.y / 3));
             //Rotate the weapon
-            /*Vector3 target = new Vector3();
-            target.z = innerJ.rectTransform.anchoredPosition.y;
-            weapon.transform.LookAt(target);*/
-            //print((innerJ.rectTransform.anchoredPosition.x - player.transform.position.x)+" "+ (innerJ.rectTransform.anchoredPosition.y - player.transform.position.z));
-            //weapon.transform.LookAt(new Vector3(innerJ.rectTransform.anchoredPosition.x - player.transform.position.x,0, innerJ.rectTransform.anchoredPosition.y - player.transform.position.z));
             weapon.transform.LookAt(new Vector3(-innerJ.rectTransform.anchoredPosition3D.x+14, 0, -innerJ.rectTransform.anchoredPosition3D.y+14));
         }
     }
