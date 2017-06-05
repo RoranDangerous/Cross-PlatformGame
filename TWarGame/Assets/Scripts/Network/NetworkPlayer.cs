@@ -6,17 +6,19 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 
     public GameObject cam;
     public bool myCar = true;
-	// Use this for initialization
+    private Quaternion fixedRotation;
+
 	void Start () {
         if (!photonView.isMine)
         {
             myCar = false;
             cam.SetActive(false);
         }
+        fixedRotation = cam.transform.rotation;
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		
+        if (cam.transform.rotation != fixedRotation)
+            cam.transform.rotation = fixedRotation;
 	}
 }
