@@ -90,8 +90,8 @@ MonoBehaviour:
     y: 0
     width: 230
     height: 522
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -514,23 +514,23 @@ MonoBehaviour:
     height: 501
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
-    m_LastClickedID: 0
-    m_ExpandedIDs: 7a7afcfffc7afcff107cfcff5a81fcffce86fcff4887fcff6a88fcffda89fcff548afcff768bfcff5cc4fcff98c6fcff12c7fcff34c8fcff98c9fcff12cafcff34cbfcff9ccefcff16cffcff38d0fcff80d4fcff5ed6fcffd8d6fcffecd7fcff90e5fcffd8e6fcff54e7fcff68e8fcffa4f1fcff20f2fcff34f3fcff84fbfcff86fbfcff3e05fdffb805fdffda06fdff100efdff120efdff8811fdff0212fdff2413fdff5c19fdffd619fdfff81afdffe01efdff5a1ffdff7c20fdfff028fdff6a29fdff8c2afdffb22ffdff2c30fdff4e31fdff9edafdff6ce6fdffe8e6fdff0ae8fdff74f4fdff82f4fdffd6f4fdffa8f6fdff0ef7fdff22f8fdfffefbfdff7afcfdff8efdfdff3003feff3203feff7804fefff204feff1406feff401afeffbe1dfeff0820feff8420feffa621feff7c25feffc226feff3e27feff6028fefff02bfeff6c2cfeff802dfeff8033feffd037feff143afeff8e3afeffb03bfeff3e3ffeffb83ffeffda40feffd445feff1848feff9448feffa849fefff451feff4c55feffa855feffbc56feff6699feffe299fefff69afeff669cfeffe09cfefff49dfeff8c22ffff6682ffffc8aaffffccacffff48adffff5caeffffccb5ffff6cbcffffe6bcffff08beffffc6c1ffff42c2ffff64c3ffff06c5ffff80c5ffffa2c6ffff6eccffffe8ccffff0aceffffc6d3ffff42d4ffff56d5ffff12deffff8edeffffa2dfffffe0f1fffff2f5ffff3cf8ffffb4f8ffffdaf9ffffdcfbffff00000000622e00009a3600000442000098430000
+    m_SelectedIDs: 3a280000
+    m_LastClickedID: 10298
+    m_ExpandedIDs: eaf4ffff6af5ffff7ef6ffffd0f8ffffdcfbffff0000000022280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: weapon
-      m_OriginalName: weapon
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: -197760
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 0
       m_ClientGUIView: {fileID: 4}
     m_SearchString: 
@@ -596,9 +596,9 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.08187445, y: 0.14152688, z: -0.011775472, w: 0.98649997}
+    m_Target: {x: -0.009155091, y: -0.18138532, z: 0.0016886197, w: -0.98336846}
     speed: 2
-    m_Value: {x: 0.08187224, y: 0.14152305, z: -0.011775154, w: 0.98647326}
+    m_Value: {x: -0.009155087, y: -0.18138526, z: 0.0016886191, w: -0.9833681}
   m_Size:
     m_Target: 42.84172
     speed: 2
