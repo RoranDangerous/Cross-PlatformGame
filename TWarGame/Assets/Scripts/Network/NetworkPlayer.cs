@@ -42,8 +42,11 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         {
             timeToReachGoal = currentPacketTime - lastPacketTime;
             currentTime += Time.deltaTime;
-            transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
-            transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime / timeToReachGoal));
+            if ((float)(currentTime / timeToReachGoal) != 0 && currentTime!=0 && timeToReachGoal !=0)
+            {
+                transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, (float)(currentTime / timeToReachGoal));
+                transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, (float)(currentTime / timeToReachGoal));
+            }
             /*transform.position = Vector3.Lerp(positionAtLastPacket, realPosition, Time.deltaTime * 10000);
             transform.rotation = Quaternion.Lerp(rotationAtLastPacket, realRotation, Time.deltaTime * 10000);*/
         }
