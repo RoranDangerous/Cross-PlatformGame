@@ -11,7 +11,7 @@ public class Moving : Photon.MonoBehaviour {
     private GameObject body;
     private Vector3 lastPosition;
     private GameObject sphereO;
-    private float threshold = 0.001f;
+    private float threshold = 0.01f;
 
     void Start () {
         //rigidbody = GetComponent<Rigidbody>();

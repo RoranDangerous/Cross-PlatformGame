@@ -43,4 +43,5 @@ public class NetworkManager : Photon.PunBehaviour
         base.OnDisconnectedFromPhoton();
         Destroy(player);
     }
+
 }
