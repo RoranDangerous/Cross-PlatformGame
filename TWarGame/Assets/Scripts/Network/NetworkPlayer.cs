@@ -17,6 +17,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     public Vector3 realPosition = Vector3.zero;
     public Quaternion rotationAtLastPacket;
     public Quaternion realRotation;
+    
 
     void Start () {
         if (!photonView.isMine)
