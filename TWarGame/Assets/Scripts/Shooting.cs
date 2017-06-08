@@ -8,7 +8,6 @@ public class Shooting : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHan
 {
     public GameObject body;
     public GameObject weapon;
-    public GameObject bullet;
     private float startAngle = -15;
     private float endAngle = 15;
     public bool shot = false;
@@ -58,6 +57,8 @@ public class Shooting : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHan
 	// Update is called once per frame
 	void Update () {
         timeLeft -= Time.deltaTime;
+
+        print("Update lives: " + lives);
         if (lives <= 1)
         {
             print("Lives == 0");
@@ -74,26 +75,19 @@ public class Shooting : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHan
             if (shot)
             {
                 stream.SendNext("HIT HIT HIT");
-                stream.SendNext(body);
-                stream.SendNext(weapon);
                 shot = false;
                 print("SENT");
+                print("LIVES: " + lives);
             }
         }
         else
         {
             String received = (String)stream.ReceiveNext();
-            GameObject body = (GameObject)stream.ReceiveNext();
-            GameObject weapon = (GameObject)stream.ReceiveNext();
             if (received == "HIT HIT HIT")
             {
-                decreaseLife();
-
-                print(body.GetComponent<PhotonView>().isMine);
-                body.SetActive(false);
-                weapon.SetActive(false);
-                //destroyTank(body,weapon);
-                print(lives);
+                print("Received HIT HIT HIT");
+                //decreaseLife();
+                GetComponent<PhotonView>().RPC("ApplyDamage", PhotonTargets.All);
             }
         }
     }
@@ -103,11 +97,12 @@ public class Shooting : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHan
         lives -= 1;
     }
 
-    public void destroyTank(GameObject b, GameObject w)
+    [PunRPC]
+    void ApplyDamage()
     {
-        print(b.GetComponent<PhotonView>().isMine);
-        b.SetActive(false);
-        w.SetActive(false);
+        print("Apply Damage!");
+        print(body.GetComponent<PhotonView>().isMine);
+        lives -= 1;
     }
 
 }

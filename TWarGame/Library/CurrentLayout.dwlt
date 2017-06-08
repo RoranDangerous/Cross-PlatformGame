@@ -42,8 +42,8 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 679, y: 342}
-  m_MaxSize: {x: 12004, y: 8042}
+  m_MinSize: {x: 681, y: 342}
+  m_MaxSize: {x: 12006, y: 8042}
   vertical: 0
   controlID: 69
 --- !u!114 &3
@@ -208,8 +208,8 @@ MonoBehaviour:
     y: 0
     width: 1583
     height: 947
-  m_MinSize: {x: 404, y: 342}
-  m_MaxSize: {x: 8004, y: 8042}
+  m_MinSize: {x: 406, y: 342}
+  m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
   controlID: 70
 --- !u!114 &10
@@ -232,8 +232,8 @@ MonoBehaviour:
     y: 0
     width: 1583
     height: 582
-  m_MinSize: {x: 404, y: 221}
-  m_MaxSize: {x: 8004, y: 4021}
+  m_MinSize: {x: 406, y: 221}
+  m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
   controlID: 71
 --- !u!114 &11
@@ -358,19 +358,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Prefabs/Resources
+    - Assets/Photon Unity Networking/Resources
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/Resources
+  - Assets/Photon Unity Networking/Resources
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Roran\Documents\workspace\Cross-PlatformGame\TWarGame
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 23}
-    m_SelectedIDs: bc250000
-    m_LastClickedID: 9660
-    m_ExpandedIDs: 0000000074250000c4250000d62500001a2600001e2600002626000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 73}
+    m_SelectedIDs: d4250000
+    m_LastClickedID: 9684
+    m_ExpandedIDs: 0000000074250000a0250000c4250000c8250000d6250000e22500001a2600001e2600002626000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -516,7 +516,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 4cc3fdffacc3fdffd0c4fdff8accfdffecccfdff10cefdff30ecfdff8eecfdffb2edfdff0c39feff7239feff963afeff103ffeff703ffeff9440feff1c45feff8e45feffa046feff544dfeff564dfeff3268feff8e68feffa069feffc67afeff087bfeff0c7bfeff7481feff8481feffac81feff4c83feffaa83feffce84feff90b7fefffab7feff1eb9feff7ed0feffe8d0fefffad1feffcce4feff0ee5feff12e5feff98ecfeff82f2feffe2f2feff06f4feff700effffd20efffff60fffffc6f2ffff28f5ffffa4f5ffffccf6ffffdcfbffff00000000
+    m_ExpandedIDs: 649efeffd69efeffe89ffeffbca5feff2ea6feff42a7feffbeabfefffcabfefffeabfeff02acfeff4a79ffff6679ffffac79ffffbc79ffffd879ffffaa7bffff187cffff3c7dffff809cfffff29cffff189effffaaaaffff1cabffff40acffff6ed5ffffdcd5ffff04d7ffff3aecffff92ecffffb6edffff2cf2ffff94f2ffffb8f3ffffacf7ffff00f8ffff24f9ffffdcfbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -563,7 +563,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 674
-    width: 1583
+    width: 1581
     height: 344
   m_SceneLighting: 1
   lastFramingTime: 2602.6338754803483
@@ -596,9 +596,9 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.12139892, y: -0.15948294, z: 0.019766027, w: -0.9795101}
+    m_Target: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
     speed: 2
-    m_Value: {x: -0.12139872, y: -0.15948267, z: 0.019765994, w: -0.9795085}
+    m_Value: {x: 0.08717229, y: -0.89959055, z: 0.21045254, w: 0.3726226}
   m_Size:
     m_Target: 21.670532
     speed: 2
