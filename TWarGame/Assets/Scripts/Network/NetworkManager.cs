@@ -5,10 +5,10 @@ using UnityEngine;
 public class NetworkManager : Photon.PunBehaviour
 {
 
-    public string roomName = "testRoom";
+    private string roomName = "testRoom";
     const string version = "v0.0.1";
     public GameObject spawn;
-    public string playerPrefab = "Player";
+    private string playerPrefab = "playerPrefab";
     private GameObject player;
 
     void Start () {
@@ -36,7 +36,7 @@ public class NetworkManager : Photon.PunBehaviour
         base.OnJoinedRoom();
         Vector3 position = new Vector3(spawn.transform.position.x + 3, spawn.transform.position.y + 1, spawn.transform.position.z);
         player = PhotonNetwork.Instantiate(playerPrefab, position, spawn.transform.rotation, 0);
-        player.name = "Player"+PhotonNetwork.playerList.Length;
+        player.name = "PlayerNew"+PhotonNetwork.playerList.Length;
     }
 
     public override void OnDisconnectedFromPhoton()

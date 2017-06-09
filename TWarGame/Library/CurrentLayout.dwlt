@@ -42,10 +42,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 681, y: 342}
-  m_MaxSize: {x: 12006, y: 8042}
+  m_MinSize: {x: 679, y: 342}
+  m_MaxSize: {x: 12004, y: 8042}
   vertical: 0
-  controlID: 69
+  controlID: 81
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -71,7 +71,7 @@ MonoBehaviour:
   - {fileID: 15}
   - {fileID: 12}
   m_Selected: 0
-  m_LastSelected: 1
+  m_LastSelected: 0
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -208,10 +208,10 @@ MonoBehaviour:
     y: 0
     width: 1583
     height: 947
-  m_MinSize: {x: 406, y: 342}
-  m_MaxSize: {x: 8006, y: 8042}
+  m_MinSize: {x: 404, y: 342}
+  m_MaxSize: {x: 8004, y: 8042}
   vertical: 1
-  controlID: 70
+  controlID: 82
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -232,10 +232,10 @@ MonoBehaviour:
     y: 0
     width: 1583
     height: 582
-  m_MinSize: {x: 406, y: 221}
-  m_MaxSize: {x: 8006, y: 4021}
+  m_MinSize: {x: 404, y: 221}
+  m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
-  controlID: 71
+  controlID: 60
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -283,9 +283,9 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 1533
+    x: 1585
     y: 92
-    width: 387
+    width: 335
     height: 926
   m_InitialOpenURL: https://public-cdn.cloud.unity3d.com/editor/production/cloud/hub
   m_GlobalObjectTypeName: 
@@ -358,18 +358,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Photon Unity Networking/Resources
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Photon Unity Networking/Resources
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Roran\Documents\workspace\Cross-PlatformGame\TWarGame
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 73}
-    m_SelectedIDs: d4250000
-    m_LastClickedID: 9684
+    scrollPos: {x: 0, y: 109}
+    m_SelectedIDs: ae250000
+    m_LastClickedID: 9646
     m_ExpandedIDs: 0000000074250000a0250000c4250000c8250000d6250000e22500001a2600001e2600002626000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -398,7 +398,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000074250000c4250000d62500001a2600001e26000026260000
+    m_ExpandedIDs: 0000000074250000a0250000c4250000c8250000d6250000e22500001a2600001e26000026260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -423,10 +423,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 2489fbff
+    m_LastClickedInstanceID: -292572
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: c6230000f42affff76e4feffee250000ec250000f6250000
+    m_ExpandedInstanceIDs: c6230000f42affff76e4feffee250000ec250000f62500002297feff
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -516,7 +516,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 649efeffd69efeffe89ffeffbca5feff2ea6feff42a7feffbeabfefffcabfefffeabfeff02acfeff4a79ffff6679ffffac79ffffbc79ffffd879ffffaa7bffff187cffff3c7dffff809cfffff29cffff189effffaaaaffff1cabffff40acffff6ed5ffffdcd5ffff04d7ffff3aecffff92ecffffb6edffff2cf2ffff94f2ffffb8f3ffffacf7ffff00f8ffff24f9ffffdcfbffff00000000
+    m_ExpandedIDs: aa79fbff087afbff1e7bfbfff885fbff2e89fbff9489fbffaa8afbff7644fcffe644fcfffc45fcff2cb9fcff92b9fcffa8bafcff2ae0fcff86e0fcff9ce1fcff92edfcff740efdff6e11fdff741ffdffde1ffdfff420fdffd034fdff3435fdff3a35fdffde35fdff4236fdff5837fdffc43cfdff0a69fdff0682fdff7282fdff8883fdffee94fdff4e95fdff6496fdff16a8fdff76a8fdff8ca9fdff40c0fdff64e2fdffc0e2fdffd6e3fdff26ecfdff82ecfdff94edfdff5640feff36b0feffa6c6feffbe01ffffd001ffff9a03ffff8607ffffb807ffffba07ffffbe07ffffbc11ffff2a12ffff4e13ffff8628fffff028ffff142affff2e2fffff982fffffbc30ffff2a57ffff9857ffffbc58ffffac6dffff1e6effff426fffff9a92ffff0a93ffff2e94ffff7cccffffeaccffff0eceffff44e8ffffaee8ffffd2e9ffff46f9ffffbcf9ffffe4faffffdafbffff00000000583a0000623a0000f0440000024d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -596,13 +596,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+    m_Target: {x: -0.33954272, y: -0.04315451, z: 0.015598318, w: -0.93947685}
     speed: 2
-    m_Value: {x: 0.08717229, y: -0.89959055, z: 0.21045254, w: 0.3726226}
+    m_Value: {x: -0.33954072, y: -0.04315426, z: 0.015598226, w: -0.93947136}
   m_Size:
-    m_Target: 21.670532
+    m_Target: 72.14179
     speed: 2
-    m_Value: 21.670532
+    m_Value: 72.14179
   m_Ortho:
     m_Target: 0
     speed: 2

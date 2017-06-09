@@ -12,7 +12,9 @@ public class Shooting : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private float endAngle = 15;
     public bool shot = false;
     float timeLeft;
-    public int lives = 3;
+    int lives = 2;
+    private PhotonView hitTarget;
+    private int hitTargetID = 0;
     
 
     public virtual void OnPointerUp(PointerEventData ped)
@@ -38,6 +40,8 @@ public class Shooting : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHan
                         print("Shot");
                         shot = true;
                         timeLeft = 3f;
+                        hitTarget = hit.collider.gameObject.GetComponent<PhotonView>();
+                        hitTargetID = hitTarget.photonView.owner.ID;
                     }
                 }
                 else
@@ -75,9 +79,8 @@ public class Shooting : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHan
             if (shot)
             {
                 stream.SendNext("HIT HIT HIT");
+                stream.SendNext(hitTargetID);
                 shot = false;
-                print("SENT");
-                print("LIVES: " + lives);
             }
         }
         else
@@ -85,24 +88,27 @@ public class Shooting : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHan
             String received = (String)stream.ReceiveNext();
             if (received == "HIT HIT HIT")
             {
-                print("Received HIT HIT HIT");
-                //decreaseLife();
-                GetComponent<PhotonView>().RPC("ApplyDamage", PhotonTargets.All);
+                int pID = (int)stream.ReceiveNext();
+                print("Received HIT HIT HIT "+pID);
+                if(pID == PhotonNetwork.player.ID)
+                {
+                    print("Player == true");
+                    GetComponent<PhotonView>().RPC("ApplyDamage", PhotonTargets.All, pID);
+                }
             }
         }
     }
 
-    public void decreaseLife()
-    {
-        lives -= 1;
-    }
-
     [PunRPC]
-    void ApplyDamage()
+    void ApplyDamage(int pID)
     {
-        print("Apply Damage!");
-        print(body.GetComponent<PhotonView>().isMine);
-        lives -= 1;
+        if(pID == PhotonNetwork.player.ID)
+        {
+            print("Apply Damage! "+lives);
+            lives -= 1;
+            if (lives <= 0)
+                PhotonNetwork.Disconnect();
+        }
     }
 
 }

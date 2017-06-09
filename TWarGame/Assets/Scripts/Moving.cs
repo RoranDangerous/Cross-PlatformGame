@@ -4,8 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Moving : Photon.MonoBehaviour {
-
-    //private new Rigidbody rigidbody;
+    
     private float startAccelerationX, startAccelerationZ;
     public NetworkPlayer np;
     private GameObject body;
@@ -14,9 +13,7 @@ public class Moving : Photon.MonoBehaviour {
     private float threshold = 0.01f;
 
     void Start () {
-        //rigidbody = GetComponent<Rigidbody>();
         body = transform.Find("body").gameObject;
-        body.AddComponent<Rigidbody>();
         startAccelerationX = Input.acceleration.x;
         startAccelerationZ = Input.acceleration.y;
         lastPosition = body.transform.position;
@@ -27,9 +24,8 @@ public class Moving : Photon.MonoBehaviour {
     void Update() {
         if (np.myCar)
         {
-           GetComponent<Rigidbody>().velocity = new Vector3((Input.acceleration.x - startAccelerationX) * 20, 0, (Input.acceleration.y - startAccelerationZ) * 20);
-
-            //if (body.transform.position.x != lastPosition.x || body.transform.position.z != lastPosition.z)
+            GetComponent<Rigidbody>().velocity = new Vector3((Input.acceleration.x - startAccelerationX) * 20, 0, (Input.acceleration.y - startAccelerationZ) * 20);
+            
             if(body.transform.position.x - lastPosition.x > threshold || body.transform.position.x - lastPosition.x < -threshold || body.transform.position.z - lastPosition.z > threshold || body.transform.position.z - lastPosition.z < -threshold)
             {
                 Vector3 lookPosition = new Vector3((body.transform.position.x - lastPosition.x) * 20 + body.transform.position.x, lastPosition.y, (body.transform.position.z - lastPosition.z) * 20 + body.transform.position.z);
