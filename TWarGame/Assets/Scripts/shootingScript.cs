@@ -11,9 +11,10 @@ public class shootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
     private float startAngle = -15;
     private float endAngle = 15;
     public bool shot = false;
-    float timeLeft;
+    public float timeLeft;
     private PhotonView hitTarget;
     public int hitTargetID = 0;
+    public float reloadTime = 3f;
 
     void Start()
     {
@@ -34,30 +35,32 @@ public class shootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
 
     public virtual void OnPointerDown(PointerEventData ped)
     {
-        print("Down");
+        print("Down "+timeLeft);
         Vector3 startPos = new Vector3(body.transform.position.x, 1, body.transform.position.z);
-        for (float i = startAngle; i <= endAngle; i += 3)
+        if(timeLeft <= 0)
         {
-            Vector3 targetPos = weapon.transform.position + (Quaternion.Euler(i, 0, 0) * (weapon.transform.forward * -1)).normalized * 500;
-            RaycastHit hit;
-            if (Physics.Raycast(startPos, targetPos, out hit))
+
+            timeLeft = reloadTime;
+            for (float i = startAngle; i <= endAngle; i += 3)
             {
-                GameObject rootOfHit = hit.collider.gameObject.transform.root.gameObject;
-                print("Hit "+ rootOfHit.name);
-                if (rootOfHit.GetComponent<PhotonView>() != null && 
-                    !rootOfHit.GetComponent<PhotonView>().isMine &&
-                    rootOfHit.name != "Background")
+                Vector3 targetPos = weapon.transform.position + (Quaternion.Euler(i, 0, 0) * (weapon.transform.forward * -1)).normalized * 500;
+                RaycastHit hit;
+                if (Physics.Raycast(startPos, targetPos, out hit))
                 {
-                    if (timeLeft <= 0)
+                    GameObject rootOfHit = hit.collider.gameObject.transform.root.gameObject;
+                    print("Hit "+ rootOfHit.name);
+                    if (rootOfHit.GetComponent<PhotonView>() != null && 
+                        !rootOfHit.GetComponent<PhotonView>().isMine &&
+                        rootOfHit.name != "Background")
                     {
                         print("Shot");
                         shot = true;
-                        timeLeft = 3f;
                         hitTarget = rootOfHit.GetComponent<PhotonView>();
                         hitTargetID = hitTarget.photonView.owner.ID;
                     }
                 }
             }
         }
+        
     }
 }

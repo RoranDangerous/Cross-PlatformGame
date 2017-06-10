@@ -25,8 +25,8 @@ public class Moving : Photon.MonoBehaviour {
         if (np.myCar)
         {
             GetComponent<Rigidbody>().velocity = new Vector3((Input.acceleration.x - startAccelerationX) * 20, 0, (Input.acceleration.y - startAccelerationZ) * 20);
-            
-            if(body.transform.position.x - lastPosition.x > threshold || body.transform.position.x - lastPosition.x < -threshold || body.transform.position.z - lastPosition.z > threshold || body.transform.position.z - lastPosition.z < -threshold)
+
+            if (body.transform.position.x - lastPosition.x > threshold || body.transform.position.x - lastPosition.x < -threshold || body.transform.position.z - lastPosition.z > threshold || body.transform.position.z - lastPosition.z < -threshold)
             {
                 Vector3 lookPosition = new Vector3((body.transform.position.x - lastPosition.x) * 20 + body.transform.position.x, lastPosition.y, (body.transform.position.z - lastPosition.z) * 20 + body.transform.position.z);
                 body.transform.LookAt(lookPosition);
