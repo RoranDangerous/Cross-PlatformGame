@@ -15,6 +15,7 @@ public class shootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
     private PhotonView hitTarget;
     public int hitTargetID = 0;
     public float reloadTime = 3f;
+    public int rootOfHitID;
 
     void Start()
     {
@@ -35,11 +36,10 @@ public class shootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
 
     public virtual void OnPointerDown(PointerEventData ped)
     {
-        print("Down "+timeLeft);
+        print("Shoot " + gameObject.transform.root.gameObject.GetInstanceID());
         Vector3 startPos = new Vector3(body.transform.position.x, 1, body.transform.position.z);
         if(timeLeft <= 0)
         {
-
             timeLeft = reloadTime;
             for (float i = startAngle; i <= endAngle; i += 3)
             {
@@ -48,12 +48,13 @@ public class shootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
                 if (Physics.Raycast(startPos, targetPos, out hit))
                 {
                     GameObject rootOfHit = hit.collider.gameObject.transform.root.gameObject;
+                    rootOfHitID = rootOfHit.GetInstanceID();
                     print("Hit "+ rootOfHit.name);
                     if (rootOfHit.GetComponent<PhotonView>() != null && 
                         !rootOfHit.GetComponent<PhotonView>().isMine &&
                         rootOfHit.name != "Background")
                     {
-                        print("Shot");
+                        print("Shot "+rootOfHit.GetInstanceID());
                         shot = true;
                         hitTarget = rootOfHit.GetComponent<PhotonView>();
                         hitTargetID = hitTarget.photonView.owner.ID;

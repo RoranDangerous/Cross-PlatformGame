@@ -25,6 +25,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     private Quaternion realRotationWeapon;
     private GameObject firebtn;
     private shootingScript shotScript;
+    private heath healthScript;
 
     private int maxHealth = 100;
     private int curHealth = 100;
@@ -33,12 +34,12 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     private Texture2D fgImage;
     private Image newImg;
     private GameObject harc;
-    private Vector3 harcPos;
+    //private Vector3 harcPos;
     private GameObject healthBar;
     private GameObject reloadBar;
 
-    private float healthBarLength;
-
+    //private float healthBarLength;
+    
     int lives = 3;
     
 
@@ -53,16 +54,17 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         body.AddComponent<BoxCollider>();
         firebtn = cam.transform.Find("PlayerUI").gameObject.transform.Find("Fire").gameObject;
         shotScript = firebtn.GetComponent<shootingScript>();
+        healthScript = GetComponent<heath>();
         harc = cam.transform.Find("PlayerUI").gameObject.transform.Find("healthAndReloadCanvas").gameObject;
         harc.GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width / 2, 100);
         harc.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,110);
         harc.transform.Rotate(new Vector3(0,0,180));
-        harcPos = harc.transform.position;
+        //harcPos = harc.transform.position;
 
         healthBar = harc.transform.Find("healthBar").gameObject.transform.Find("healthMain").gameObject;
         reloadBar = harc.transform.Find("reloadBar").gameObject.transform.Find("reloadMain").gameObject;
 
-        healthBarLength = Screen.width / 2;
+        //healthBarLength = Screen.width / 2;
 
         if (!photonView.isMine && body != null && weapon != null)
         {
@@ -103,32 +105,13 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 
     void OnGUI()
     {
-        healthBar.transform.localScale = new Vector3((float)curHealth/(float)maxHealth,1,1);
+        healthBar.transform.localScale = new Vector3((float)healthScript.health/ (float)3,1,1);
         if(shotScript.timeLeft >= 0)
         {
             reloadBar.transform.localScale = new Vector3(1-(float)shotScript.timeLeft / (float)shotScript.reloadTime, 1, 1);
         }
         else
             reloadBar.transform.localScale = new Vector3(1, 1, 1);
-
-        // Create one Group to contain both images
-        // Adjust the first 2 coordinates to place it somewhere else on-screen
-        /*GUI.BeginGroup(new Rect(10, 10, healthBarLength, 32));
-
-        // Draw the background image
-        GUI.Box(new Rect(0, 0, healthBarLength, 32), bgImage);
-
-        // Create a second Group which will be clipped
-        // We want to clip the image and not scale it, which is why we need the second Group
-        GUI.BeginGroup(new Rect(0, 0, curHealth / maxHealth * healthBarLength, 32));
-
-        // Draw the foreground image
-        GUI.Box(new Rect(0, 0, healthBarLength, 32), fgImage);
-
-        // End both Groups
-        GUI.EndGroup();
-
-        GUI.EndGroup();*/
     }
 
     public void AddjustCurrentHealth(int adj)
@@ -144,7 +127,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         if (maxHealth < 1)
             maxHealth = 1;
 
-        healthBarLength = (Screen.width / 2) * (curHealth / (float)maxHealth);
+        //healthBarLength = (Screen.width / 2) * (curHealth / (float)maxHealth);
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -164,6 +147,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
                 {
                     stream.SendNext("HIT HIT HIT");
                     stream.SendNext(shotScript.hitTargetID);
+                    stream.SendNext(shotScript.rootOfHitID);
                     shotScript.shot = false;
                 }
             }
@@ -191,20 +175,12 @@ public class NetworkPlayer : Photon.MonoBehaviour {
                     if (received == "HIT HIT HIT")
                     {
                         int pID = (int)stream.ReceiveNext();
+                        int rootID = (int)stream.ReceiveNext();
                         print("Received HIT HIT HIT " + pID);
                         if (pID == PhotonNetwork.player.ID)
                         {
-                            print("Player == true");
-                            GetComponent<PhotonView>().RPC("ApplyDamage", PhotonTargets.All, pID);
-
-                            if (Network.isServer)
-                            {
-                                print("is Server");
-                            }
-                            if (Network.isClient)
-                            {
-                                print("is Client");
-                            }
+                            print("Player == true "+lives);
+                            GetComponent<PhotonView>().RPC("ApplyDamage", PhotonTargets.All, pID,rootID);
                         }
                     }
                 }
@@ -214,15 +190,24 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     }
 
     [PunRPC]
-    void ApplyDamage(int pID)
+    void ApplyDamage(int pID, int rootID)
     {
         if (pID == PhotonNetwork.player.ID)
         {
             print("Apply Damage! " + lives);
             lives -= 1;
             AddjustCurrentHealth(-34);
-            if (lives <= 0)
-                PhotonNetwork.Disconnect();
+            //if (lives <= 0)
+            //print(PhotonNetwork.player.NickName);
+            healthScript.health -= 1;
+
+            Destroy(weapon);
         }
+    }
+
+    [PunRPC]
+    void changeUI(int pID)
+    {
+
     }
 }
