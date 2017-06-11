@@ -203,6 +203,8 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 
             Destroy(weapon);
         }
+        else
+            Destroy(weapon);
     }
 
     [PunRPC]
