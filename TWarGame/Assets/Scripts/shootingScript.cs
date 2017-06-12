@@ -36,7 +36,6 @@ public class shootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
 
     public virtual void OnPointerDown(PointerEventData ped)
     {
-        print("Shoot " + gameObject.transform.root.gameObject.GetInstanceID());
         Vector3 startPos = new Vector3(body.transform.position.x, 1, body.transform.position.z);
         if(timeLeft <= 0)
         {

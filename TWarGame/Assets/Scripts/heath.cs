@@ -15,6 +15,6 @@ public class heath : NetworkBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //print(health);
+        print("Health script: "+health);
 	}
 }
