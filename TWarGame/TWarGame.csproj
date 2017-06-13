@@ -166,14 +166,13 @@
     <Compile Include="Assets\PhotonChatApi\ChatState.cs" />
     <Compile Include="Assets\PhotonChatApi\ChatUserStatus.cs" />
     <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
+    <Compile Include="Assets\Scripts\Heath.cs" />
     <Compile Include="Assets\Scripts\JoystickController.cs" />
     <Compile Include="Assets\Scripts\Moving.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkPlayer.cs" />
     <Compile Include="Assets\Scripts\Shooting.cs" />
-    <Compile Include="Assets\Scripts\heath.cs" />
-    <Compile Include="Assets\Scripts\joystickController1.cs" />
-    <Compile Include="Assets\Scripts\shootingScript.cs" />
+    <Compile Include="Assets\Scripts\ShootingScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Photon Unity Networking\changelog.txt" />

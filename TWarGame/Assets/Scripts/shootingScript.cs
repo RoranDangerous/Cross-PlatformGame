@@ -3,30 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class shootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    private GameObject body;
     private GameObject weapon;
-    private Transform parentPlayer;
-    private float startAngle = -15;
-    private float endAngle = 15;
-    public bool shot = false;
-    public float timeLeft;
-    private PhotonView hitTarget;
-    public int hitTargetID = 0;
-    public float reloadTime = 3f;
-    public int rootOfHitID;
+    private float startAngle = 15;
+    private float endAngle = -15;
+    private float timeLeft = 0;
+    private float reloadTime = 3f;
+    private GameObject hitObject;
 
     void Start()
     {
-        parentPlayer = transform.parent.parent.parent.transform;
-        body = parentPlayer.Find("body").gameObject;
-        weapon = parentPlayer.Find("weapon").gameObject;
+        SetReloadTime(3f);
+        AssignObjects();
     }
 
     private void Update()
     {
-        timeLeft -= Time.deltaTime;
+        DecreaseTime();
     }
 
     public virtual void OnPointerUp(PointerEventData ped)
@@ -36,31 +30,75 @@ public class shootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
 
     public virtual void OnPointerDown(PointerEventData ped)
     {
-        Vector3 startPos = new Vector3(body.transform.position.x, 1, body.transform.position.z);
-        if(timeLeft <= 0)
+        Shoot();
+    }
+
+    private void AssignObjects()
+    {
+        weapon = transform.root.transform.Find("weapon").gameObject;
+    }
+
+    private void DecreaseTime()
+    {
+        timeLeft -= Time.deltaTime;
+    }
+
+    private void Shoot()
+    {
+        if (Reloaded())
         {
             timeLeft = reloadTime;
-            for (float i = startAngle; i <= endAngle; i += 3)
+            for (float i = startAngle; i >= endAngle; i -= 1)
             {
-                Vector3 targetPos = weapon.transform.position + (Quaternion.Euler(i, 0, 0) * (weapon.transform.forward * -1)).normalized * 500;
-                RaycastHit hit;
-                if (Physics.Raycast(startPos, targetPos, out hit))
-                {
-                    GameObject rootOfHit = hit.collider.gameObject.transform.root.gameObject;
-                    rootOfHitID = rootOfHit.GetInstanceID();
-                    print("Hit "+ rootOfHit.name);
-                    if (rootOfHit.GetComponent<PhotonView>() != null && 
-                        !rootOfHit.GetComponent<PhotonView>().isMine &&
-                        rootOfHit.name != "Background")
-                    {
-                        print("Shot "+rootOfHit.GetInstanceID());
-                        shot = true;
-                        hitTarget = rootOfHit.GetComponent<PhotonView>();
-                        hitTargetID = hitTarget.photonView.owner.ID;
-                    }
-                }
+                if (ShootRaycast(i))
+                    break;
             }
         }
-        
+    }
+
+    private bool Reloaded()
+    {
+        return timeLeft <= 0;
+    }
+
+    private bool ShootRaycast(float angle)
+    {
+        Vector3 targetPos = weapon.transform.position + (Quaternion.Euler(angle, -4, 0) * (weapon.transform.forward * -1)).normalized * 500;
+        RaycastHit hit;
+        //Debug.DrawRay(weapon.transform.position, targetPos * 1000f, Color.green, 20, true);
+        if (Physics.Raycast(weapon.transform.position, targetPos, out hit))
+        {
+            hitObject = hit.collider.gameObject.transform.root.gameObject;
+            if ( !isThis(hitObject) )
+            {
+                if(hitObject.GetComponent<PhotonView>() != null)
+                {
+                    hitObject.GetComponent<PhotonView>().RPC("ApplyDamage", PhotonPlayer.Find(hitObject.GetComponent<PhotonView>().owner.ID));
+                    return true;
+                }
+                
+            }
+        }
+        return false;
+    }
+
+    private bool isThis(GameObject target)
+    {
+        return target == this.transform.root.gameObject;
+    }
+
+    public void SetReloadTime(float time)
+    {
+        reloadTime = time;
+    }
+
+    public float GetReloadTime()
+    {
+        return reloadTime;
+    }
+
+    public float GetTimeLeft()
+    {
+        return timeLeft;
     }
 }

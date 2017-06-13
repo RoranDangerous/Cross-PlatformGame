@@ -19,12 +19,14 @@ public class NetworkManager : Photon.PunBehaviour
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
+
         PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
+
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.IsVisible = false;
         roomOptions.MaxPlayers = 4;
@@ -34,11 +36,8 @@ public class NetworkManager : Photon.PunBehaviour
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
-        Vector3 position = new Vector3(spawn.transform.position.x + 3, spawn.transform.position.y + 1, spawn.transform.position.z);
-        player = PhotonNetwork.Instantiate(playerPrefab, position, spawn.transform.rotation, 0);
-        player.name= "PlayerNew"+PhotonNetwork.playerList.Length;
-        PhotonNetwork.player.NickName = "PlayerNickname" + PhotonNetwork.playerList.Length;
-        
+
+        CreatePlayer();        
     }
 
     public override void OnDisconnectedFromPhoton()
@@ -47,4 +46,11 @@ public class NetworkManager : Photon.PunBehaviour
         Destroy(player);
     }
 
+    private void CreatePlayer()
+    {
+        Vector3 position = new Vector3(spawn.transform.position.x + 3, spawn.transform.position.y + 1, spawn.transform.position.z);
+        player = PhotonNetwork.Instantiate(playerPrefab, position, spawn.transform.rotation, 0);
+        player.name = "PlayerNew" + PhotonNetwork.playerList.Length;
+        PhotonNetwork.player.NickName = "PlayerNickname" + PhotonNetwork.playerList.Length;
+    }
 }
