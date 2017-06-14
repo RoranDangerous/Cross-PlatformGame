@@ -180,7 +180,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         cam = transform.Find("Camera").gameObject;
         weapon = transform.Find("weapon").gameObject;
         body.AddComponent<Rigidbody>();
-        body.GetComponent<Rigidbody>().isKinematic = true;
+        body.GetComponent<Rigidbody>().isKinematic = false;
         body.GetComponent<Rigidbody>().useGravity = true;
         body.AddComponent<BoxCollider>();
         firebtn = cam.transform.Find("PlayerUI").gameObject.transform.Find("Fire").gameObject;

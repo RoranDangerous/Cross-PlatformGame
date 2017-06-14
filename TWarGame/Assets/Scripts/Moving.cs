@@ -11,9 +11,15 @@ public class Moving : Photon.MonoBehaviour {
     private Vector3 lastPosition;
     private GameObject sphereO;
     private float threshold = 0.01f;
+    private GameObject cam;
+    private GameObject weapon;
+    private GameObject healthCanv;
 
     void Start () {
         body = transform.Find("body").gameObject;
+        cam = transform.Find("Camera").gameObject;
+        weapon = transform.Find("weapon").gameObject;
+        healthCanv = transform.Find("healthAndReloadCanvas").gameObject;
         sphereO = body.transform.Find("SphereTarget").gameObject;
         sphereO.SetActive(false);
         lastPosition = body.transform.position;
@@ -43,7 +49,10 @@ public class Moving : Photon.MonoBehaviour {
 
     private void ChangeVelocity()
     {
-        GetComponent<Rigidbody>().velocity = new Vector3((Input.acceleration.x - startAccelerationX) * 20, 0, (Input.acceleration.y - startAccelerationZ) * 20);
+        body.GetComponent<Rigidbody>().velocity = new Vector3((Input.acceleration.x - startAccelerationX) * 20, 0, (Input.acceleration.y - startAccelerationZ) * 20);
+        cam.transform.position = new Vector3(body.transform.position.x,cam.transform.position.y,body.transform.position.z);
+        healthCanv.transform.position = new Vector3(body.transform.position.x, healthCanv.transform.position.y, body.transform.position.z);
+        weapon.transform.position = new Vector3(body.transform.position.x, body.transform.position.y + (weapon.GetComponent<Renderer>().bounds.size.y / 2), body.transform.position.z);
     }
 
     private void RotateCar()

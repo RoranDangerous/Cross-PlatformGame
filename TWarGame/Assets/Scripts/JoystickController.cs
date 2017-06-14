@@ -55,6 +55,7 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
         innerJ = transform.GetChild(0).GetComponent<Image>();
         parentPlayer = transform.parent.parent.parent.transform;
         weapon = parentPlayer.Find("weapon").gameObject;
+        
     }
 
     private void SetJoystickPositionZero()
