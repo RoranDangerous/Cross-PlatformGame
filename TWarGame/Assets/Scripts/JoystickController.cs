@@ -23,7 +23,7 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
     {
         Vector2 pos;
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(outerJ.rectTransform
-                       , new Vector2(ped.position.x - 250, ped.position.y + 250)
+                       , new Vector2(ped.position.x - outerJ.GetComponent<RectTransform>().rect.width/2, ped.position.y + outerJ.GetComponent<RectTransform>().rect.width/2)
                        , ped.pressEventCamera
                        , out pos))
         {
@@ -52,6 +52,7 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
     private void AssignObjects()
     {
         outerJ = GetComponent<Image>();
+        outerJ.rectTransform.anchoredPosition = new Vector3((transform.parent.GetComponent<RectTransform>().rect.width * .5f / 3), transform.parent.GetComponent<RectTransform>().rect.height * .8f / 3, 0);
         innerJ = transform.GetChild(0).GetComponent<Image>();
         parentPlayer = transform.parent.parent.parent.transform;
         weapon = parentPlayer.Find("weapon").gameObject;

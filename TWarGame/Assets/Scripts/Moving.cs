@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class Moving : Photon.MonoBehaviour {
     private Vector3 lastPosition;
     private GameObject sphereO;
     private float threshold = 0.01f;
+    private float speed = 70;
+    private float maxSpeed = 13;
     private GameObject cam;
     private GameObject weapon;
     private GameObject healthCanv;
@@ -49,7 +52,9 @@ public class Moving : Photon.MonoBehaviour {
 
     private void ChangeVelocity()
     {
-        body.GetComponent<Rigidbody>().velocity = new Vector3((Input.acceleration.x - startAccelerationX) * 20, 0, (Input.acceleration.y - startAccelerationZ) * 20);
+        //if(Input.acceleration.x > limit || Input.acceleration.x < -limit || Input.acceleration.x < -limit || Input.acceleration.y > limit)
+        body.GetComponent<Rigidbody>().velocity = new Vector3(getVelocityX(),0,getVelocityZ());
+        //body.GetComponent<Rigidbody>().AddForce(new Vector3(getVelocityX(), 0, getVelocityZ()));
         cam.transform.position = new Vector3(body.transform.position.x,cam.transform.position.y,body.transform.position.z);
         healthCanv.transform.position = new Vector3(body.transform.position.x, healthCanv.transform.position.y, body.transform.position.z);
         weapon.transform.position = new Vector3(body.transform.position.x, body.transform.position.y + (weapon.GetComponent<Renderer>().bounds.size.y / 2), body.transform.position.z);
@@ -57,12 +62,38 @@ public class Moving : Photon.MonoBehaviour {
 
     private void RotateCar()
     {
-        if (body.transform.position.x - lastPosition.x > threshold || body.transform.position.x - lastPosition.x < -threshold || body.transform.position.z - lastPosition.z > threshold || body.transform.position.z - lastPosition.z < -threshold)
+        if (Math.Abs(body.transform.position.x - lastPosition.x) > threshold || Math.Abs(body.transform.position.z - lastPosition.z) > threshold)
         {
-            Vector3 lookPosition = new Vector3((body.transform.position.x - lastPosition.x) * 20 + body.transform.position.x, lastPosition.y, (body.transform.position.z - lastPosition.z) * 20 + body.transform.position.z);
+            Vector3 lookPosition = new Vector3((body.transform.position.x - lastPosition.x) * speed + body.transform.position.x, lastPosition.y, (body.transform.position.z - lastPosition.z) * speed + body.transform.position.z);
             body.transform.LookAt(lookPosition);
             sphereO.transform.position = lookPosition;
         }
         lastPosition = body.transform.position;
+    }
+
+    private float getVelocityX()
+    {
+        if ((Input.acceleration.x - startAccelerationX) * speed > maxSpeed)
+        {
+            return maxSpeed;
+        }
+        else if ((Input.acceleration.x - startAccelerationX) * speed < -maxSpeed)
+        {
+            return -maxSpeed;
+        }
+        else return (Input.acceleration.x - startAccelerationX) * speed;
+    }
+
+    private float getVelocityZ()
+    {
+        if ((Input.acceleration.y - startAccelerationZ) * speed > maxSpeed)
+        {
+            return maxSpeed;
+        }
+        else if ((Input.acceleration.y - startAccelerationZ) * speed < -maxSpeed)
+        {
+            return -maxSpeed;
+        }
+        else return (Input.acceleration.y - startAccelerationZ) * speed;
     }
 }
