@@ -57,7 +57,7 @@ public class Moving : Photon.MonoBehaviour {
         //body.GetComponent<Rigidbody>().AddForce(new Vector3(getVelocityX(), 0, getVelocityZ()));
         cam.transform.position = new Vector3(body.transform.position.x,cam.transform.position.y,body.transform.position.z);
         healthCanv.transform.position = new Vector3(body.transform.position.x, healthCanv.transform.position.y, body.transform.position.z);
-		weapon.transform.position = new Vector3(body.transform.position.x, body.transform.position.y + (weapon.transform.Find("pCube4").GetComponent<Renderer>().bounds.size.y / 2), body.transform.position.z);
+		weapon.transform.position = new Vector3(body.transform.position.x, body.transform.position.y + (weapon.transform.Find("mainObject").GetComponent<Renderer>().bounds.size.y / 2), body.transform.position.z);
     }
 
     private void RotateCar()

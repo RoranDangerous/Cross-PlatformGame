@@ -13,6 +13,7 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
     private float reloadTime = 3f;
     private GameObject hitObject;
     private bool buttonPressed = false;
+	public bool shot = false;
 
     void Start()
     {
@@ -57,6 +58,8 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
     {
         if (Reloaded())
         {
+			EnableAnimation ();
+			shot = true;
             timeLeft = reloadTime;
             for (float i = startAngle; i >= endAngle; i -= 1)
             {
@@ -122,4 +125,9 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
     {
         GetComponent<Image>().rectTransform.localScale = new Vector3(1, 1, 0);
     }
+
+	private void EnableAnimation()
+	{
+		weapon.GetComponent<Animator> ().Play("playAnim");
+	}
 }

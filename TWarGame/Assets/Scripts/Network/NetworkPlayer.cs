@@ -41,11 +41,12 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     private GameObject reloadBar;
 	private GameObject reloadMain;
 	private float heightHealth = 1f;
+	public float weaponHeight; 
     
 
     void Start ()
     {
-        AssignObjects();      
+        AssignObjects();
 
         if (!photonView.isMine && CheckBodyAndWeapon())
         {
@@ -63,6 +64,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 	void Update () {
 
         UpdateCameraRotation();
+		harc.transform.position = new Vector3 (body.transform.position.x,body.transform.position.y + 2,body.transform.position.z);
 
 		if (!photonView.isMine && CheckBodyAndWeapon ()) {
 			UpdatePositionOfPlayers ();
@@ -99,6 +101,10 @@ public class NetworkPlayer : Photon.MonoBehaviour {
                 realPositionWeapon = (Vector3)stream.ReceiveNext();
                 realRotationWeapon = (Quaternion)stream.ReceiveNext();
                 realHealthScale =  (Vector3)stream.ReceiveNext();
+				if ((bool)stream.ReceiveNext ())
+				{
+					weapon.GetComponent<Animator> ().Play ("playAnim");
+				}
                 //realHarcPosition = (Vector3)stream.ReceiveNext();
 
                 // Update the time of the packet
@@ -133,6 +139,8 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         stream.SendNext(weapon.transform.position);
         stream.SendNext(weapon.transform.rotation);
         stream.SendNext(healthBar.transform.localScale);
+		stream.SendNext(shotScript.shot);
+		shotScript.shot = false;
         //stream.SendNext(harc.transform.position);
     }
 
@@ -167,7 +175,8 @@ public class NetworkPlayer : Photon.MonoBehaviour {
             weapon.transform.rotation = Quaternion.Lerp(rotationAtLastPacketWeapon, realRotationWeapon, lerpTime);
 
             healthBar.transform.localScale = Vector3.Lerp(healthScaleAtLastPacket, realHealthScale, lerpTime);
-			harc.transform.position = Vector3.Lerp(new Vector3 (positionAtLastPacketBody.x,positionAtLastPacketBody.y +heightHealth,positionAtLastPacketBody.z), new Vector3 (realPositionBody.x,realPositionBody.y +heightHealth,realPositionBody.z), lerpTime);
+			harc.transform.position = Vector3.Lerp(new Vector3 (positionAtLastPacketBody.x,positionAtLastPacketBody.y + 2,positionAtLastPacketBody.z), new Vector3 (realPositionBody.x,realPositionBody.y + 2,realPositionBody.z), lerpTime);
+
         }
     }
 
@@ -182,7 +191,9 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     {
         body = transform.Find("body").gameObject;
         cam = transform.Find("Camera").gameObject;
-        weapon = transform.Find("weapon").gameObject;
+		weapon = transform.Find("weapon").gameObject;
+		weaponHeight = weapon.transform.Find ("mainObject").GetComponent<Renderer> ().bounds.size.y;
+		weapon.transform.position = new Vector3 (body.transform.position.x, body.transform.position.y + weaponHeight / 2, body.transform.position.z);
         body.AddComponent<Rigidbody>();
         body.GetComponent<Rigidbody>().isKinematic = false;
         body.GetComponent<Rigidbody>().useGravity = true;
@@ -192,7 +203,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         shotScript = firebtn.GetComponent<ShootingScript>();
         healthScript = GetComponent<Heath>();
         harc = transform.Find("healthAndReloadCanvas").gameObject;
-		harc.transform.position = new Vector3 (body.transform.position.x,body.transform.position.y + heightHealth,body.transform.position.z);
+		harc.transform.position = new Vector3 (body.transform.position.x,body.transform.position.y + 2,body.transform.position.z);
         healthBar = harc.transform.Find("healthBar").gameObject.transform.Find("healthMain").gameObject;
         reloadBar = harc.transform.Find("reloadBar").gameObject.transform.Find("reloadMain").gameObject;
 		reloadMain = reloadBar.transform.parent.gameObject;
