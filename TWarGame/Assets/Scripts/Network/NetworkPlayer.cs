@@ -39,6 +39,8 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     private GameObject harc;
     private GameObject healthBar;
     private GameObject reloadBar;
+	private GameObject reloadMain;
+	private float heightHealth = 1f;
     
 
     void Start ()
@@ -51,6 +53,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 
             myCar = false;
             cam.SetActive(false);
+			reloadMain.SetActive (false);
         }
 
         if(cam != null)
@@ -61,10 +64,11 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 
         UpdateCameraRotation();
 
-        if (!photonView.isMine && CheckBodyAndWeapon())
-        {
-            UpdatePositionOfPlayers();
-        }
+		if (!photonView.isMine && CheckBodyAndWeapon ()) {
+			UpdatePositionOfPlayers ();
+		} else if (body.transform.position.y > 10 || body.transform.position.y < -10) {
+			// Destroy tank
+		}
     }
 
     void OnGUI()
@@ -95,7 +99,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
                 realPositionWeapon = (Vector3)stream.ReceiveNext();
                 realRotationWeapon = (Quaternion)stream.ReceiveNext();
                 realHealthScale =  (Vector3)stream.ReceiveNext();
-                realHarcPosition = (Vector3)stream.ReceiveNext();
+                //realHarcPosition = (Vector3)stream.ReceiveNext();
 
                 // Update the time of the packet
                 lastPacketTime = currentPacketTime;
@@ -129,7 +133,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         stream.SendNext(weapon.transform.position);
         stream.SendNext(weapon.transform.rotation);
         stream.SendNext(healthBar.transform.localScale);
-        stream.SendNext(harc.transform.position);
+        //stream.SendNext(harc.transform.position);
     }
 
     private bool CheckBodyAndWeapon()
@@ -163,7 +167,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
             weapon.transform.rotation = Quaternion.Lerp(rotationAtLastPacketWeapon, realRotationWeapon, lerpTime);
 
             healthBar.transform.localScale = Vector3.Lerp(healthScaleAtLastPacket, realHealthScale, lerpTime);
-            harc.transform.position = Vector3.Lerp(harcPositionAtlastPacket, realHarcPosition, lerpTime);
+			harc.transform.position = Vector3.Lerp(new Vector3 (positionAtLastPacketBody.x,positionAtLastPacketBody.y +heightHealth,positionAtLastPacketBody.z), new Vector3 (realPositionBody.x,realPositionBody.y +heightHealth,realPositionBody.z), lerpTime);
         }
     }
 
@@ -182,13 +186,16 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         body.AddComponent<Rigidbody>();
         body.GetComponent<Rigidbody>().isKinematic = false;
         body.GetComponent<Rigidbody>().useGravity = true;
-        body.AddComponent<BoxCollider>();
+		if(body.GetComponent<BoxCollider>() == null)
+        	body.AddComponent<BoxCollider>();
         firebtn = cam.transform.Find("PlayerUI").gameObject.transform.Find("Fire").gameObject;
         shotScript = firebtn.GetComponent<ShootingScript>();
         healthScript = GetComponent<Heath>();
         harc = transform.Find("healthAndReloadCanvas").gameObject;
+		harc.transform.position = new Vector3 (body.transform.position.x,body.transform.position.y + heightHealth,body.transform.position.z);
         healthBar = harc.transform.Find("healthBar").gameObject.transform.Find("healthMain").gameObject;
         reloadBar = harc.transform.Find("reloadBar").gameObject.transform.Find("reloadMain").gameObject;
+		reloadMain = reloadBar.transform.parent.gameObject;
     }
 
     private void UpdateLastPositionAndRotation()

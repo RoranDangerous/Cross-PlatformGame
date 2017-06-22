@@ -19,6 +19,10 @@ public class JoystickController : MonoBehaviour, IDragHandler, IPointerUpHandler
         AssignObjects();
     }
 
+	void Update(){
+		print ("Update");
+	}
+
     public virtual void OnDrag(PointerEventData ped)
     {
 		print ("OnDrag");

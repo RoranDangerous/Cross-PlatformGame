@@ -10,10 +10,10 @@ public class Moving : Photon.MonoBehaviour {
     public NetworkPlayer np;
     private GameObject body;
     private Vector3 lastPosition;
-    private GameObject sphereO;
+    //private GameObject sphereO;
     private float threshold = 0.01f;
-    private float speed = 70;
-    private float maxSpeed = 13;
+    private float speed = 90;
+    private float maxSpeed = 27;
     private GameObject cam;
     private GameObject weapon;
     private GameObject healthCanv;
@@ -23,8 +23,8 @@ public class Moving : Photon.MonoBehaviour {
         cam = transform.Find("Camera").gameObject;
         weapon = transform.Find("weapon").gameObject;
         healthCanv = transform.Find("healthAndReloadCanvas").gameObject;
-        sphereO = body.transform.Find("SphereTarget").gameObject;
-        sphereO.SetActive(false);
+        //sphereO = body.transform.Find("SphereTarget").gameObject;
+        //sphereO.SetActive(false);
         lastPosition = body.transform.position;
 
         ChangeStartAcceleration();
@@ -57,7 +57,7 @@ public class Moving : Photon.MonoBehaviour {
         //body.GetComponent<Rigidbody>().AddForce(new Vector3(getVelocityX(), 0, getVelocityZ()));
         cam.transform.position = new Vector3(body.transform.position.x,cam.transform.position.y,body.transform.position.z);
         healthCanv.transform.position = new Vector3(body.transform.position.x, healthCanv.transform.position.y, body.transform.position.z);
-        weapon.transform.position = new Vector3(body.transform.position.x, body.transform.position.y + (weapon.GetComponent<Renderer>().bounds.size.y / 2), body.transform.position.z);
+		weapon.transform.position = new Vector3(body.transform.position.x, body.transform.position.y + (weapon.transform.Find("pCube4").GetComponent<Renderer>().bounds.size.y / 2), body.transform.position.z);
     }
 
     private void RotateCar()
@@ -66,7 +66,7 @@ public class Moving : Photon.MonoBehaviour {
         {
             Vector3 lookPosition = new Vector3((body.transform.position.x - lastPosition.x) * speed + body.transform.position.x, lastPosition.y, (body.transform.position.z - lastPosition.z) * speed + body.transform.position.z);
             body.transform.LookAt(lookPosition);
-            sphereO.transform.position = lookPosition;
+            //sphereO.transform.position = lookPosition;
         }
         lastPosition = body.transform.position;
     }

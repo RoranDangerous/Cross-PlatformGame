@@ -8,7 +8,7 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
 {
     private GameObject weapon;
     private float startAngle = 15;
-    private float endAngle = -5;
+    private float endAngle = -15;
     private float timeLeft = 0;
     private float reloadTime = 3f;
     private GameObject hitObject;
@@ -73,9 +73,10 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
 
     private bool ShootRaycast(float angle)
     {
-        Vector3 targetPos = weapon.transform.position + (Quaternion.Euler(angle, 0, 0) * (weapon.transform.forward * -1)).normalized * 500;
+        //Vector3 targetPos = weapon.transform.position + (Quaternion.Euler(angle, 0, 0) * (weapon.transform.forward * -1)).normalized * 500;
+		Vector3 targetPos = (Quaternion.Euler(angle, 0, 0) * (-weapon.transform.forward));
         RaycastHit hit;
-        Debug.DrawRay(weapon.transform.position, targetPos * 1000f, Color.white, 20, true);
+		Debug.DrawRay(weapon.transform.position, targetPos * 1000f, Color.white, 20, true);
         if (Physics.Raycast(weapon.transform.position, targetPos, out hit))
         {
             hitObject = hit.collider.gameObject.transform.root.gameObject;

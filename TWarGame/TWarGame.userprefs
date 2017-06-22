@@ -1,8 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\JoystickController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Moving.cs">
     <Files>
-      <File FileName="Assets\Scripts\JoystickController.cs" Line="34" Column="44" />
+      <File FileName="Assets\Scripts\JoystickController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ShootingScript.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Network\NetworkPlayer.cs" Line="190" Column="10" />
+      <File FileName="Assets\Scripts\Heath.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Moving.cs" Line="60" Column="130" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
