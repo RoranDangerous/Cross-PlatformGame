@@ -7,13 +7,18 @@ using UnityEngine.UI;
 public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private GameObject weapon;
-    private float startAngle = 15;
+    private float startAngle = 0;
     private float endAngle = -15;
     private float timeLeft = 0;
     private float reloadTime = 3f;
     private GameObject hitObject;
     private bool buttonPressed = false;
 	public bool shot = false;
+	public GameObject explosion;
+	public GameObject fireAnim;
+	private bool angleTemp = true;
+	private GameObject lastExplosion;
+	private GameObject lastShotAnim;
 
     void Start()
     {
@@ -46,7 +51,7 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
     private void AssignObjects()
     {
         weapon = transform.root.transform.Find("weapon").gameObject;
-        GetComponent<Image>().rectTransform.anchoredPosition = new Vector3(-(transform.parent.GetComponent<RectTransform>().rect.width * .4f / 3), transform.parent.GetComponent<RectTransform>().rect.height * .6f / 3, 0);
+		GetComponent<Image>().rectTransform.anchoredPosition = new Vector3(-(transform.parent.GetComponent<RectTransform>().rect.width * .4f / 3), transform.parent.GetComponent<RectTransform>().rect.height * .6f / 3, 0);
     }
 
     private void DecreaseTime()
@@ -58,13 +63,19 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
     {
         if (Reloaded())
         {
-			EnableAnimation ();
+			//EnableAnimation ();
+			AnimateShooting();
 			shot = true;
             timeLeft = reloadTime;
             for (float i = startAngle; i >= endAngle; i -= 1)
             {
-                if (ShootRaycast(i))
-                    break;
+				if (angleTemp)
+					if (ShootRaycast (-i))
+						break;
+				else
+					if (ShootRaycast (-i))
+						break;
+				angleTemp = !angleTemp;
             }
         }
     }
@@ -83,14 +94,18 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
         if (Physics.Raycast(weapon.transform.position, targetPos, out hit))
         {
             hitObject = hit.collider.gameObject.transform.root.gameObject;
-            if ( !isThis(hitObject) )
+			if ( !isThis(hitObject)  && hit.collider.gameObject.name != "pPlane1")
             {
+				if (lastExplosion != null)
+					Destroy (lastExplosion);
+				lastExplosion = Instantiate (explosion, hit.point, Quaternion.FromToRotation (Vector3.up, Vector3.up));
+				transform.root.gameObject.GetComponent<PhotonView>().RPC("HitAnimation", PhotonTargets.All, hit.point);
                 if(hitObject.GetComponent<PhotonView>() != null)
                 {
-                    hitObject.GetComponent<PhotonView>().RPC("ApplyDamage", PhotonPlayer.Find(hitObject.GetComponent<PhotonView>().owner.ID));
-                    return true;
-                }
-                
+					hitObject.GetComponent<PhotonView>().RPC("ApplyDamage", PhotonPlayer.Find(hitObject.GetComponent<PhotonView>().owner.ID));
+
+				}
+				return true;      
             }
         }
         return false;
@@ -129,5 +144,13 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
 	private void EnableAnimation()
 	{
 		weapon.GetComponent<Animator> ().Play("playAnim");
+	}
+
+	private void AnimateShooting()
+	{		
+		fireAnim.SetActive (true);
+		fireAnim.GetComponent<ParticleSystem> ().Clear ();
+		fireAnim.GetComponent<ParticleSystem> ().Play ();
+		transform.root.gameObject.GetComponent<PhotonView>().RPC("AnimateShot", PhotonTargets.All, fireAnim.transform.position, fireAnim.transform.rotation);
 	}
 }

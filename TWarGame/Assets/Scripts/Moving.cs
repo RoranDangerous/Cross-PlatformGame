@@ -12,8 +12,8 @@ public class Moving : Photon.MonoBehaviour {
     private Vector3 lastPosition;
     //private GameObject sphereO;
     private float threshold = 0.01f;
-    private float speed = 90;
-    private float maxSpeed = 27;
+    private float speed = 60;
+    private float maxSpeed = 21;
     private GameObject cam;
     private GameObject weapon;
     private GameObject healthCanv;

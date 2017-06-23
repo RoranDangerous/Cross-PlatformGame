@@ -23,7 +23,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     private Quaternion realRotationBody;
     private Vector3 realPositionWeapon;
     private Quaternion realRotationWeapon;
-    private Vector3 harcPositionAtlastPacket;
+    //private Vector3 harcPositionAtlastPacket;
     private Vector3 realHarcPosition;
     private Vector3 healthScaleAtLastPacket;
     private Vector3 realHealthScale;
@@ -40,8 +40,13 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     private GameObject healthBar;
     private GameObject reloadBar;
 	private GameObject reloadMain;
-	private float heightHealth = 1f;
-	public float weaponHeight; 
+	//private float heightHealth = 1f;
+	public float weaponHeight;
+
+	public GameObject explosion;
+	private GameObject lastExplosion;
+
+	public GameObject fireAnim;
     
 
     void Start ()
@@ -101,10 +106,11 @@ public class NetworkPlayer : Photon.MonoBehaviour {
                 realPositionWeapon = (Vector3)stream.ReceiveNext();
                 realRotationWeapon = (Quaternion)stream.ReceiveNext();
                 realHealthScale =  (Vector3)stream.ReceiveNext();
-				if ((bool)stream.ReceiveNext ())
+				/*if ((bool)stream.ReceiveNext ())
 				{
 					weapon.GetComponent<Animator> ().Play ("playAnim");
-				}
+				}*/
+
                 //realHarcPosition = (Vector3)stream.ReceiveNext();
 
                 // Update the time of the packet
@@ -115,7 +121,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     }
 
     [PunRPC]
-    void ApplyDamage()
+	void ApplyDamage()
     {
         RemoveHealth(3000);
 
@@ -126,6 +132,23 @@ public class NetworkPlayer : Photon.MonoBehaviour {
             Destroy(harc);
         }
     }
+
+	[PunRPC]
+	void HitAnimation(Vector3 point)
+	{
+		if (lastExplosion != null)
+			Destroy (lastExplosion);
+		lastExplosion = Instantiate (explosion, point, Quaternion.FromToRotation (Vector3.up, Vector3.up));
+
+	}
+
+	[PunRPC]
+	void AnimateShot(Vector3 pos, Quaternion rot)
+	{
+		fireAnim.SetActive (true);
+		fireAnim.GetComponent<ParticleSystem> ().Clear ();
+		fireAnim.GetComponent<ParticleSystem> ().Play ();
+	}
 
     private void RemoveHealth(int num)
     {
@@ -215,7 +238,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         rotationAtLastPacketBody = body.transform.rotation;
         positionAtLastPacketWeapon = weapon.transform.position;
         rotationAtLastPacketWeapon = weapon.transform.rotation;
-        harcPositionAtlastPacket = harc.transform.position;
+        //harcPositionAtlastPacket = harc.transform.position;
         healthScaleAtLastPacket = healthBar.transform.localScale;
     }
 }
