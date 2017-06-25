@@ -121,6 +121,7 @@
      <Compile Include="Assets\Scripts\Moving.cs" />
      <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
      <Compile Include="Assets\Scripts\Network\NetworkPlayer.cs" />
+     <Compile Include="Assets\Scripts\PlayScript.cs" />
      <Compile Include="Assets\Scripts\Shooting.cs" />
      <Compile Include="Assets\Scripts\ShootingScript.cs" />
      <None Include="Assets\Photon Unity Networking\link.xml" />

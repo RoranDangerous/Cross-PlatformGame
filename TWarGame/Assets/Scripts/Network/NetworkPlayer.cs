@@ -47,6 +47,8 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 	private GameObject lastExplosion;
 
 	public GameObject fireAnim;
+
+	public bool destroyed = false;
     
 
     void Start ()
@@ -72,7 +74,10 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 		harc.transform.position = new Vector3 (body.transform.position.x,body.transform.position.y + 2,body.transform.position.z);
 
 		if (!photonView.isMine && CheckBodyAndWeapon ()) {
-			UpdatePositionOfPlayers ();
+			if (!destroyed)
+				UpdatePositionOfPlayers ();
+			else
+				Destroy (this);
 		} else if (body.transform.position.y > 10 || body.transform.position.y < -10) {
 			// Destroy tank
 		}
@@ -106,12 +111,6 @@ public class NetworkPlayer : Photon.MonoBehaviour {
                 realPositionWeapon = (Vector3)stream.ReceiveNext();
                 realRotationWeapon = (Quaternion)stream.ReceiveNext();
                 realHealthScale =  (Vector3)stream.ReceiveNext();
-				/*if ((bool)stream.ReceiveNext ())
-				{
-					weapon.GetComponent<Animator> ().Play ("playAnim");
-				}*/
-
-                //realHarcPosition = (Vector3)stream.ReceiveNext();
 
                 // Update the time of the packet
                 lastPacketTime = currentPacketTime;
@@ -125,13 +124,20 @@ public class NetworkPlayer : Photon.MonoBehaviour {
     {
         RemoveHealth(3000);
 
-        if(healthScript.currentHealth < 0)
+        if(healthScript.currentHealth <= 0)
         {
-            Destroy(body);
-            Destroy(weapon);
-            Destroy(harc);
+			//PhotonNetwork.Destroy (this.GetComponent<PhotonView>());
+			PhotonNetwork.LeaveRoom ();
+			//GetComponent<PhotonView>().RPC("DestroyTank", PhotonTargets.All);
+			Application.LoadLevel("StartScreen");
         }
     }
+
+	[PunRPC]
+	void DestroyTank()
+	{
+		Destroy (this);
+	}
 
 	[PunRPC]
 	void HitAnimation(Vector3 point)
@@ -157,6 +163,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 
     private void SendStream(PhotonStream stream)
     {
+		
         stream.SendNext(body.transform.position);
         stream.SendNext(body.transform.rotation);
         stream.SendNext(weapon.transform.position);
@@ -199,7 +206,6 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 
             healthBar.transform.localScale = Vector3.Lerp(healthScaleAtLastPacket, realHealthScale, lerpTime);
 			harc.transform.position = Vector3.Lerp(new Vector3 (positionAtLastPacketBody.x,positionAtLastPacketBody.y + 2,positionAtLastPacketBody.z), new Vector3 (realPositionBody.x,realPositionBody.y + 2,realPositionBody.z), lerpTime);
-
         }
     }
 

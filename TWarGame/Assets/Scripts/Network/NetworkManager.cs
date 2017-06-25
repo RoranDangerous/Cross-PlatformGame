@@ -12,21 +12,29 @@ public class NetworkManager : Photon.PunBehaviour
     private GameObject player;
 
     void Start () {
-        if (!PhotonNetwork.connected)
-            PhotonNetwork.ConnectUsingSettings(version);
+		if (PhotonNetwork.connected) 
+		{
+			RoomOptions roomOptions = new RoomOptions();
+			roomOptions.IsVisible = false;
+			roomOptions.MaxPlayers = 4;
+			PhotonNetwork.JoinOrCreateRoom (roomName, roomOptions, TypedLobby.Default);
+		}
+		else
+			PhotonNetwork.ConnectUsingSettings (version);
+		print ("Start");
     }
 
     public override void OnConnectedToMaster()
-    {
-        base.OnConnectedToMaster();
-
-        PhotonNetwork.JoinLobby();
+	{
+		print ("ConnectedToMaster");
+		base.OnConnectedToMaster();
+		PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-
+		print ("OnJoinedLobby");
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.IsVisible = false;
         roomOptions.MaxPlayers = 4;
@@ -44,7 +52,18 @@ public class NetworkManager : Photon.PunBehaviour
     {
         base.OnDisconnectedFromPhoton();
         Destroy(player);
+		print ("OnDisconnectedFromPhoton()");
     }
+
+	public override void OnLeftRoom()
+	{
+		base.OnLeftRoom ();
+	}
+
+	public override void OnLeftLobby()
+	{
+		base.OnLeftLobby();
+	}
 
     private void CreatePlayer()
     {
