@@ -7,6 +7,10 @@ public class Heath : NetworkBehaviour {
 
     [SyncVar]
     public int currentHealth = 10000;
+
+
+	[SyncVar]
+	public int currentLives = 3;
     public int maxHealth = 10000;
 	
 	void Update () {
@@ -22,4 +26,11 @@ public class Heath : NetworkBehaviour {
                 currentHealth = maxHealth;
         }
     }
+
+	public bool DecreaseLives()
+	{
+		print (currentLives);
+		currentLives -= 1;
+		return currentLives <= 0;
+	}
 }

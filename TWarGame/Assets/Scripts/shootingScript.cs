@@ -63,7 +63,6 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
     {
         if (Reloaded())
         {
-			//EnableAnimation ();
 			AnimateShooting();
 			shot = true;
             timeLeft = reloadTime;
@@ -87,7 +86,6 @@ public class ShootingScript : Photon.MonoBehaviour, IPointerDownHandler, IPointe
 
     private bool ShootRaycast(float angle)
     {
-        //Vector3 targetPos = weapon.transform.position + (Quaternion.Euler(angle, 0, 0) * (weapon.transform.forward * -1)).normalized * 500;
 		Vector3 targetPos = (Quaternion.Euler(angle, 0, 0) * (-weapon.transform.forward));
         RaycastHit hit;
 		Debug.DrawRay(weapon.transform.position, targetPos * 1000f, Color.white, 20, true);

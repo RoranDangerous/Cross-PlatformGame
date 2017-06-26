@@ -10,6 +10,7 @@ public class NetworkManager : Photon.PunBehaviour
     public GameObject spawn;
     private string playerPrefab = "playerPrefab";
     private GameObject player;
+	public GameObject localPlayer;
 
     void Start () {
 		if (PhotonNetwork.connected) 
@@ -21,12 +22,10 @@ public class NetworkManager : Photon.PunBehaviour
 		}
 		else
 			PhotonNetwork.ConnectUsingSettings (version);
-		print ("Start");
     }
 
     public override void OnConnectedToMaster()
 	{
-		print ("ConnectedToMaster");
 		base.OnConnectedToMaster();
 		PhotonNetwork.JoinLobby();
     }
@@ -34,7 +33,6 @@ public class NetworkManager : Photon.PunBehaviour
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
-		print ("OnJoinedLobby");
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.IsVisible = false;
         roomOptions.MaxPlayers = 4;
@@ -67,8 +65,10 @@ public class NetworkManager : Photon.PunBehaviour
 
     private void CreatePlayer()
     {
-        Vector3 position = new Vector3(spawn.transform.position.x + 3, spawn.transform.position.y + 1, spawn.transform.position.z);
-        player = PhotonNetwork.Instantiate(playerPrefab, position, spawn.transform.rotation, 0);
+		GameObject spawnPoint = spawn.transform.GetChild(Random.Range (0, spawn.transform.childCount)).gameObject;
+		//GameObject spawnPoint = localPlayer.GetComponent<SpawnScript>().spawnPoint;
+		player = PhotonNetwork.Instantiate(playerPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
+		//GameObject.Find(player.name).transform.parent = localPlayer.transform;
         player.name = "PlayerNew" + PhotonNetwork.playerList.Length;
         PhotonNetwork.player.NickName = "PlayerNickname" + PhotonNetwork.playerList.Length;
     }

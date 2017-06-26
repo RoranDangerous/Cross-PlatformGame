@@ -49,6 +49,9 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 	public GameObject fireAnim;
 
 	public bool destroyed = false;
+
+	public GameObject spawn;
+	public GameObject parentO;
     
 
     void Start ()
@@ -69,6 +72,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 	}
 	
 	void Update () {
+
 
         UpdateCameraRotation();
 		harc.transform.position = new Vector3 (body.transform.position.x,body.transform.position.y + 2,body.transform.position.z);
@@ -119,6 +123,10 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         }
     }
 
+	IEnumerator wait(){
+		yield return new WaitForSeconds (3);
+	}
+
     [PunRPC]
 	void ApplyDamage()
     {
@@ -127,17 +135,16 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         if(healthScript.currentHealth <= 0)
         {
 			//PhotonNetwork.Destroy (this.GetComponent<PhotonView>());
-			PhotonNetwork.LeaveRoom ();
-			//GetComponent<PhotonView>().RPC("DestroyTank", PhotonTargets.All);
-			Application.LoadLevel("StartScreen");
+			if (this.transform.GetComponent<Heath>().DecreaseLives ()) {
+				PhotonNetwork.LeaveRoom ();
+				Application.LoadLevel ("StartScreen");
+			} else 
+			{
+				RestoreHealth ();
+				RespawnPlayer ();
+			}
         }
     }
-
-	[PunRPC]
-	void DestroyTank()
-	{
-		Destroy (this);
-	}
 
 	[PunRPC]
 	void HitAnimation(Vector3 point)
@@ -154,6 +161,30 @@ public class NetworkPlayer : Photon.MonoBehaviour {
 		fireAnim.SetActive (true);
 		fireAnim.GetComponent<ParticleSystem> ().Clear ();
 		fireAnim.GetComponent<ParticleSystem> ().Play ();
+	}
+
+	private bool DecreaseLives()
+	{
+		healthScript.currentLives -= 1;
+
+		return healthScript.currentLives <= 0;
+	}
+
+	private void RestoreHealth()
+	{
+		healthScript.currentHealth = healthScript.maxHealth;
+	}
+
+	private void RespawnPlayer()
+	{
+		GameObject oldO = this.gameObject;
+		GameObject spawnPoint = spawn.transform.GetChild(Random.Range (0, spawn.transform.childCount)).gameObject;
+		string playerPrefab = "playerPrefab";
+		//Vector3 position = new Vector3(spawn.transform.position.x + 3, spawn.transform.position.y + 1, spawn.transform.position.z);
+		GameObject newO = PhotonNetwork.Instantiate(playerPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation, 0);
+		newO.transform.GetComponent<Heath> ().currentLives = oldO.transform.GetComponent<Heath> ().currentLives;
+		PhotonNetwork.Destroy (oldO.GetComponent<PhotonView> ());
+		//PhotonNetwork.Destroy (this.GetComponent<PhotonView>());
 	}
 
     private void RemoveHealth(int num)
@@ -236,6 +267,7 @@ public class NetworkPlayer : Photon.MonoBehaviour {
         healthBar = harc.transform.Find("healthBar").gameObject.transform.Find("healthMain").gameObject;
         reloadBar = harc.transform.Find("reloadBar").gameObject.transform.Find("reloadMain").gameObject;
 		reloadMain = reloadBar.transform.parent.gameObject;
+		parentO.transform.Find ("LocalCamera").gameObject.transform.position = cam.transform.position;
     }
 
     private void UpdateLastPositionAndRotation()
